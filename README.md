@@ -4,27 +4,11 @@
 
 Analyze any codebase — identify hotspots, hidden coupling, ownership risks — and get a prioritized decomposition plan with 5 strategic options, architecture diagrams, and an execution roadmap.
 
-```
-┌──────────────────────────────────────────────────────────────┐
-│                                                              │
-│   /refactorize                                               │
-│                                                              │
-│   Stage 1: Business Context & Census ──── Architecture       │
-│        ↓                                    Diagram          │
-│   Stage 2: Hotspot Analysis ───────────── Heatmap            │
-│        ↓                                                     │
-│   Stage 3: Coupling & Dependencies ────── Dependency Map     │
-│        ↓                                                     │
-│   Stage 4: Social & Ownership Analysis ── Ownership Map      │
-│        ↓                                                     │
-│   Stage 5: 5 Decomposition Options ────── Comparison Matrix  │
-│        ↓                                                     │
-│   Stage 6: Execution Roadmap ──────────── Gantt Chart        │
-│                                                              │
-│   Each stage has an Architect Review Gate                     │
-│                                                              │
-└──────────────────────────────────────────────────────────────┘
-```
+## Pipeline Overview
+
+<p align="center">
+  <img src="docs/images/pipeline-overview.svg" alt="Refactorizer 6-Stage Pipeline" width="700">
+</p>
 
 ## Quick Start
 
@@ -34,7 +18,7 @@ Copy or symlink the `.claude/commands/` directory into your project:
 
 ```bash
 # Option A: Clone and symlink
-git clone https://github.com/YOUR_USER/refactorizer.git ~/tools/refactorizer
+git clone https://github.com/ivan-n0v/refactorizer.git ~/tools/refactorizer
 ln -s ~/tools/refactorizer/.claude/commands/refactorize.md YOUR_PROJECT/.claude/commands/refactorize.md
 ln -s ~/tools/refactorizer/.claude/commands/refactorize-hotspots.md YOUR_PROJECT/.claude/commands/refactorize-hotspots.md
 ln -s ~/tools/refactorizer/.claude/commands/refactorize-coupling.md YOUR_PROJECT/.claude/commands/refactorize-coupling.md
@@ -68,50 +52,67 @@ Open Claude Code in your project directory and use the slash commands:
 
 Maps the current architecture and establishes business context (pain points, team structure, deployment frequency). Outputs an **architecture overview diagram**.
 
-```mermaid
-graph TB
-    subgraph "Monolith"
-        A[Auth Module<br/>12K LOC] --> B[Orders<br/>34K LOC]
-        B --> C[Payments<br/>18K LOC]
-        A --> D[Users<br/>8K LOC]
-    end
-    DB[(Database)] --- B
-    DB --- C
-```
+<p align="center">
+  <img src="docs/images/architecture-example.svg" alt="Architecture Overview Diagram" width="650">
+</p>
 
 ### Stage 2: Hotspot Analysis
 
-Finds the 2-5% of files consuming most development effort (Tornhill method: change frequency × complexity). Outputs a **hotspot heatmap**.
+Finds the 2-5% of files consuming most development effort (Tornhill method: change frequency x complexity). Outputs a **hotspot heatmap**.
+
+<p align="center">
+  <img src="docs/images/hotspot-heatmap.svg" alt="Hotspot Heatmap" width="500">
+</p>
 
 | File | Commits | LOC | Score | Business Impact |
 |------|---------|-----|-------|-----------------|
-| order_processor.py | 142 | 2,340 | 🔴 CRITICAL | Blocks every release |
-| payment_service.ts | 98 | 1,870 | 🔴 CRITICAL | 3 production incidents |
-| user_controller.java | 67 | 1,200 | 🟠 HIGH | Merge conflicts daily |
+| order_processor.py | 142 | 2,340 | CRITICAL | Blocks every release |
+| payment_service.ts | 98 | 1,870 | CRITICAL | 3 production incidents |
+| user_controller.java | 67 | 1,200 | HIGH | Merge conflicts daily |
 
 ### Stage 3: Coupling & Dependencies
 
 Discovers hidden dependencies through change coupling analysis (files that change together in git) and static import analysis. Outputs a **dependency map** with violations highlighted.
 
+<p align="center">
+  <img src="docs/images/dependency-map.svg" alt="Dependency & Coupling Map" width="650">
+</p>
+
 ### Stage 4: Social & Ownership Analysis
 
 Maps code ownership, bus factor, and Conway's Law alignment. Outputs an **ownership risk map** identifying key-person risks and contested modules.
+
+<p align="center">
+  <img src="docs/images/ownership-map.svg" alt="Ownership & Risk Map" width="600">
+</p>
 
 ### Stage 5: Five Decomposition Options
 
 Presents 5 strategic options with architecture diagrams, pros/cons, effort estimates, and a comparison matrix:
 
+<p align="center">
+  <img src="docs/images/options-comparison.svg" alt="Decomposition Options" width="700">
+</p>
+
 | Option | Strategy | Risk | Effort | First Value |
 |--------|----------|------|--------|-------------|
-| 1 | Modular Monolith | 🟢 Low | 2-4 weeks | 1-2 weeks |
-| 2 | Strangler Fig (single module) | 🟡 Med | 2-3 months | 4-6 weeks |
-| 3 | DDD Bounded Contexts | 🟡 Med | 4-6 months | 8-12 weeks |
-| 4 | Event-Driven Decoupling | 🟠 High | 4-8 months | 6-10 weeks |
-| 5 | Full Microservices | 🔴 V.High | 6-12 months | 12-16 weeks |
+| 1 | Modular Monolith | Low | 2-4 weeks | 1-2 weeks |
+| 2 | Strangler Fig (single module) | Medium | 2-3 months | 4-6 weeks |
+| 3 | DDD Bounded Contexts | Medium | 4-6 months | 8-12 weeks |
+| 4 | Event-Driven Decoupling | High | 4-8 months | 6-10 weeks |
+| 5 | Full Microservices | Very High | 6-12 months | 12-16 weeks |
 
 ### Stage 6: Execution Roadmap
 
 For the selected option: extraction sequence, per-module plans with seams and dependency breaks, milestone Gantt chart, and metrics dashboard.
+
+## How It Works
+
+The skill uses your codebase's own data — git history, file structure, import graph — to make evidence-based decomposition recommendations. No external services, no data leaves your machine.
+
+<p align="center">
+  <img src="docs/images/data-flow.svg" alt="Data Flow Pipeline" width="700">
+</p>
 
 ## The Three Skills
 
@@ -151,25 +152,6 @@ Key references:
 - **Git repository** with 6+ months of history (for behavioral analysis). The skill falls back to static analysis only if git is unavailable, with reduced confidence noted.
 - **Python 3** — for change coupling analysis scripts (inline, no packages needed)
 - **`cloc`** — recommended for accurate LOC counting (falls back to `wc -l`)
-
-## How It Works
-
-The skill uses your codebase's own data — git history, file structure, import graph — to make evidence-based decomposition recommendations. No external services, no data leaves your machine.
-
-```
-Your Codebase ──→ Git History Mining ──→ Hotspots
-    │                                      │
-    ├──→ Static Import Analysis ──→ Coupling Map
-    │                                      │
-    ├──→ Git Author Analysis ──→ Ownership Map
-    │                                      │
-    └──→ File Metadata ──→ Code Age ──→ Decomposition
-                                         Options
-                                           │
-                                           ↓
-                                    Architect Review
-                                    & Execution Plan
-```
 
 ## FAQ
 

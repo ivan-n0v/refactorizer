@@ -1,0 +1,38 @@
+graph LR
+    subgraph OPT1["Option 1: Modular Monolith"]
+        M1A["Module A"]
+        M1B["Module B"]
+        M1C["Module C"]
+        M1A ---|"interface"| M1B
+        M1B ---|"interface"| M1C
+    end
+
+    subgraph OPT2["Option 2: Strangler Fig"]
+        M2A["Monolith\n(shrinking)"]
+        M2B["New\nService"]
+        M2P{{"Proxy"}}
+        M2P --> M2A
+        M2P --> M2B
+    end
+
+    subgraph OPT3["Option 3: DDD Bounded Contexts"]
+        M3A["Context A\nService"]
+        M3B["Context B\nService"]
+        M3C["Context C\nService"]
+        M3A ---|"API"| M3B
+        M3B ---|"API"| M3C
+    end
+
+    style OPT1 fill:#E8F5E9,stroke:#2E7D32,color:#333
+    style OPT2 fill:#FFF9C4,stroke:#F57F17,color:#333
+    style OPT3 fill:#E3F2FD,stroke:#1565C0,color:#333
+
+    style M1A fill:#66BB6A,color:#fff
+    style M1B fill:#66BB6A,color:#fff
+    style M1C fill:#66BB6A,color:#fff
+    style M2A fill:#FDD835,color:#333
+    style M2B fill:#4FC3F7,color:#fff
+    style M2P fill:#fff,stroke:#999
+    style M3A fill:#42A5F5,color:#fff
+    style M3B fill:#42A5F5,color:#fff
+    style M3C fill:#42A5F5,color:#fff

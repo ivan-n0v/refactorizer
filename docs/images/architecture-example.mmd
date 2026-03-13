@@ -1,0 +1,41 @@
+graph TB
+    subgraph MONO["Monolith Boundary"]
+        AUTH["Auth Module\n12K LOC"]
+        USERS["Users\n8K LOC"]
+        ORDERS["Orders\n34K LOC"]
+        PAYMENTS["Payments\n18K LOC"]
+        CATALOG["Catalog\n22K LOC"]
+        CORE["Shared Core\n28K LOC"]
+    end
+
+    AUTH --> CORE
+    USERS --> CORE
+    ORDERS --> CORE
+    ORDERS --> PAYMENTS
+    ORDERS --> CATALOG
+    PAYMENTS --> CORE
+    CATALOG --> CORE
+
+    DB[("PostgreSQL")]
+    REDIS[("Redis")]
+    EXT["External APIs"]
+    BROWSER["Users / Clients"]
+
+    CORE --- DB
+    ORDERS --- REDIS
+    PAYMENTS --- EXT
+    BROWSER --> AUTH
+    BROWSER --> ORDERS
+    BROWSER --> CATALOG
+
+    style MONO fill:#FFF3E0,stroke:#E65100,color:#333
+    style AUTH fill:#E3F2FD,stroke:#1565C0,color:#333
+    style USERS fill:#E3F2FD,stroke:#1565C0,color:#333
+    style ORDERS fill:#FFCDD2,stroke:#C62828,color:#333
+    style PAYMENTS fill:#FFCDD2,stroke:#C62828,color:#333
+    style CATALOG fill:#E8F5E9,stroke:#2E7D32,color:#333
+    style CORE fill:#FFF9C4,stroke:#F57F17,color:#333
+    style DB fill:#F3E5F5,stroke:#6A1B9A,color:#333
+    style REDIS fill:#F3E5F5,stroke:#6A1B9A,color:#333
+    style EXT fill:#ECEFF1,stroke:#455A64,color:#333
+    style BROWSER fill:#ECEFF1,stroke:#455A64,color:#333

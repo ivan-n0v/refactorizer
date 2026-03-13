@@ -1,0 +1,29 @@
+graph TB
+    subgraph TEAM_A["Team Alpha"]
+        A1["auth/\nAlice (primary)\nBus Factor: 3"]
+        A2["users/\nAlice (primary)\nBus Factor: 2"]
+    end
+    subgraph TEAM_B["Team Beta"]
+        B1["payments/\nBob (primary)\nBus Factor: 1"]
+        B2["billing/\nBob (primary)\nBus Factor: 1"]
+    end
+    subgraph CONTESTED["No Clear Owner"]
+        C1["core/\n5 authors\nConway Violation"]
+        C2["shared/\n7 authors\nConway Violation"]
+    end
+
+    C1 -.->|"everyone touches"| A1
+    C1 -.->|"everyone touches"| B1
+    C2 -.->|"everyone touches"| A2
+    C2 -.->|"everyone touches"| B2
+
+    style TEAM_A fill:#E8F5E9,stroke:#2E7D32,color:#333
+    style TEAM_B fill:#FFEBEE,stroke:#C62828,color:#333
+    style CONTESTED fill:#FFF3E0,stroke:#E65100,color:#333
+
+    style A1 fill:#66BB6A,color:#fff,stroke:#2E7D32
+    style A2 fill:#FDD835,color:#333,stroke:#F57F17
+    style B1 fill:#EF5350,color:#fff,stroke:#C62828
+    style B2 fill:#EF5350,color:#fff,stroke:#C62828
+    style C1 fill:#FF9800,color:#fff,stroke:#E65100
+    style C2 fill:#FF9800,color:#fff,stroke:#E65100

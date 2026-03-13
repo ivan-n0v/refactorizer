@@ -1,0 +1,26 @@
+graph TB
+    subgraph CRIT["Critical Hotspots"]
+        H1["order_processor.py\n142 commits | 2,340 LOC"]
+        H2["payment_service.ts\n98 commits | 1,870 LOC"]
+        H3["core_models.py\n87 commits | 1,640 LOC"]
+    end
+    subgraph HIGH["High Priority"]
+        H4["order_views.py\n76 commits | 1,200 LOC"]
+        H5["catalog_search.py\n54 commits | 980 LOC"]
+    end
+    subgraph WATCH["Watch List"]
+        H6["user_permissions.py\n48 commits | 720 LOC"]
+        H7["shipping_calc.py\n41 commits | 560 LOC"]
+    end
+
+    style CRIT fill:#FFEBEE,stroke:#C62828,color:#333
+    style HIGH fill:#FFF3E0,stroke:#E65100,color:#333
+    style WATCH fill:#FFFDE7,stroke:#F57F17,color:#333
+
+    style H1 fill:#EF5350,color:#fff,stroke:#C62828
+    style H2 fill:#EF5350,color:#fff,stroke:#C62828
+    style H3 fill:#EF5350,color:#fff,stroke:#C62828
+    style H4 fill:#FF9800,color:#fff,stroke:#E65100
+    style H5 fill:#FF9800,color:#fff,stroke:#E65100
+    style H6 fill:#FDD835,color:#333,stroke:#F57F17
+    style H7 fill:#FDD835,color:#333,stroke:#F57F17

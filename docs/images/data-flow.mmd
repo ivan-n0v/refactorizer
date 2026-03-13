@@ -1,0 +1,37 @@
+graph LR
+    CB["Your\nCodebase"]
+    GIT["Git History\nMining"]
+    STATIC["Static Import\nAnalysis"]
+    AUTHOR["Git Author\nAnalysis"]
+    META["File\nMetadata"]
+
+    HS["Hotspots"]
+    CM["Coupling\nMap"]
+    OM["Ownership\nMap"]
+    CA["Code\nAge"]
+
+    DEC["Decomposition\nOptions"]
+    REV["Architect Review\n& Execution Plan"]
+
+    CB --> GIT --> HS
+    CB --> STATIC --> CM
+    CB --> AUTHOR --> OM
+    CB --> META --> CA
+
+    HS --> DEC
+    CM --> DEC
+    OM --> DEC
+    CA --> DEC
+    DEC --> REV
+
+    style CB fill:#2C3E50,color:#fff,stroke:#1A252F
+    style GIT fill:#4A90D9,color:#fff,stroke:#2C5F8A
+    style STATIC fill:#4A90D9,color:#fff,stroke:#2C5F8A
+    style AUTHOR fill:#4A90D9,color:#fff,stroke:#2C5F8A
+    style META fill:#4A90D9,color:#fff,stroke:#2C5F8A
+    style HS fill:#E74C3C,color:#fff,stroke:#A93226
+    style CM fill:#F39C12,color:#fff,stroke:#B7750D
+    style OM fill:#27AE60,color:#fff,stroke:#1E8449
+    style CA fill:#8E44AD,color:#fff,stroke:#6C3483
+    style DEC fill:#2980B9,color:#fff,stroke:#1F618D
+    style REV fill:#2C3E50,color:#fff,stroke:#1A252F

@@ -1,0 +1,38 @@
+graph LR
+    subgraph MOD_A["orders/"]
+        A1["processor.py"]
+        A2["models.py"]
+        A3["views.py"]
+        A3 --> A1
+        A1 --> A2
+    end
+    subgraph MOD_B["payments/"]
+        B1["service.py"]
+        B2["models.py"]
+    end
+    subgraph MOD_C["core/"]
+        C1["models.py"]
+    end
+    subgraph MOD_D["notifications/"]
+        D1["email.py"]
+    end
+
+    A1 -.->|"72 co-changes"| B1
+    B1 -->|"imports"| A2
+    A2 -->|"circular!"| B1
+    A1 -->|"imports"| C1
+    B1 -->|"imports"| C1
+    B1 -.->|"41 co-changes"| D1
+
+    style MOD_A fill:#E3F2FD,stroke:#1565C0,color:#333
+    style MOD_B fill:#FFF3E0,stroke:#E65100,color:#333
+    style MOD_C fill:#FFF9C4,stroke:#F57F17,color:#333
+    style MOD_D fill:#E8F5E9,stroke:#2E7D32,color:#333
+
+    style A1 fill:#EF5350,color:#fff,stroke:#C62828
+    style B1 fill:#FF9800,color:#fff,stroke:#E65100
+    style C1 fill:#FDD835,color:#333,stroke:#F57F17
+
+    linkStyle 4 stroke:#E53935,stroke-width:3px
+    linkStyle 5 stroke:#E53935,stroke-width:3px,stroke-dasharray:5
+    linkStyle 6 stroke:#E53935,stroke-width:3px,stroke-dasharray:5
